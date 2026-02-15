@@ -2,11 +2,10 @@
 FROM node:22-bullseye AS builder
 WORKDIR /app
 
-# Install pnpm and tsx (to run typescript scripts)
-RUN npm install -g pnpm tsx
+# Install pnpm
+RUN npm install -g pnpm
 
-# Enable tsx for node executions and skip pnpm-link in docker
-ENV NODE_OPTIONS="--import tsx"
+# Skip pnpm-link in docker
 ENV PLAYWRIGHT_COMMON_DOCKER=1
 
 # Copy dependency files
@@ -21,6 +20,9 @@ RUN npm pkg delete scripts.postinstall
 # Install dependencies
 RUN pnpm install --frozen-lockfile
 
+# Install tsx locally so it can be resolved by node
+RUN pnpm add -D tsx
+
 # Copy source code (excluding dockerignored files)
 COPY . .
 
@@ -30,7 +32,8 @@ RUN cp config.sample.json config.json
 # Build the application
 # We set a fixed version to avoid git-based versioning scripts failing
 ENV VERSION=coolify-deploy
-RUN pnpm build
+# Enable tsx for node executions during build
+RUN NODE_OPTIONS="--import tsx" pnpm build
 
 # Serve stage
 FROM nginxinc/nginx-unprivileged:alpine-slim
