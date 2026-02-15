@@ -1,9 +1,13 @@
 # Build stage
-FROM node:20-bullseye as builder
+FROM node:22-bullseye AS builder
 WORKDIR /app
 
-# Install pnpm
-RUN npm install -g pnpm
+# Install pnpm and tsx (to run typescript scripts)
+RUN npm install -g pnpm tsx
+
+# Enable tsx for node executions and skip pnpm-link in docker
+ENV NODE_OPTIONS="--import tsx"
+ENV PLAYWRIGHT_COMMON_DOCKER=1
 
 # Copy dependency files
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
