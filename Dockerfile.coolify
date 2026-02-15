@@ -21,7 +21,7 @@ RUN npm pkg delete scripts.postinstall
 RUN pnpm install --frozen-lockfile
 
 # Install tsx locally so it can be resolved by node
-RUN pnpm add -D tsx
+RUN pnpm add -D -w tsx
 
 # Copy source code (excluding dockerignored files)
 COPY . .
