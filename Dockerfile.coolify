@@ -37,6 +37,9 @@ RUN pnpm build
 # Serve stage
 FROM nginxinc/nginx-unprivileged:alpine-slim
 COPY --from=builder /app/webapp /usr/share/nginx/html
+# Explicitly copy config files which are not part of the build output
+COPY --from=builder /app/config.json /usr/share/nginx/html/config.json
+COPY --from=builder /app/config.sample.json /usr/share/nginx/html/config.sample.json
 COPY docker/nginx-templates/* /etc/nginx/templates/
 COPY docker/docker-entrypoint.d/* /docker-entrypoint.d/
 

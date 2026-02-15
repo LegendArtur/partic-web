@@ -12,7 +12,7 @@ entrypoint_log() {
 
 # Copy these config files as a base
 mkdir -p /tmp/element-web-config
-cp /app/config*.json /tmp/element-web-config/
+cp /usr/share/nginx/html/config*.json /tmp/element-web-config/
 
 # If the module directory exists AND the module directory has modules in it
 if [ -d "/modules" ] && [ "$( ls -A '/modules' )" ]; then
@@ -30,4 +30,7 @@ if [ -d "/modules" ] && [ "$( ls -A '/modules' )" ]; then
         # Append the module to the config
         jq ".modules += [\"/modules/$MODULE/$ENTRYPOINT\"]" /tmp/element-web-config/config.json | sponge /tmp/element-web-config/config.json
     done
+    
+    # Copy the modified config back to the web root
+    cp /tmp/element-web-config/config.json /usr/share/nginx/html/config.json
 fi
