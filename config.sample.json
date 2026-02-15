@@ -39,7 +39,7 @@
         "UIFeature.shareSocial": false,
         "UIFeature.identityServer": false,
         "UIFeature.thirdPartyId": false,
-        "UIFeature.registration": false,
+        "UIFeature.registration": true,
         "UIFeature.passwordReset": false,
         "UIFeature.deactivate": false,
         "UIFeature.advancedEncryption": false,
