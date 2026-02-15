@@ -43,7 +43,10 @@ COPY --from=builder /app/config.sample.json /usr/share/nginx/html/config.sample.
 COPY docker/nginx-templates/* /etc/nginx/templates/
 COPY docker/docker-entrypoint.d/* /docker-entrypoint.d/
 
+COPY docker/docker-entrypoint.d/* /docker-entrypoint.d/
+
 # Expose port 80 (Coolify container port)
+ENV ELEMENT_WEB_PORT=80
 EXPOSE 80
 
 # Healthcheck
