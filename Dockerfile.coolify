@@ -11,6 +11,9 @@ COPY packages/ ./packages/
 COPY patches/ ./patches/
 COPY scripts/ ./scripts/
 
+# Remove postinstall script as it requires ts-node and is dev-only
+RUN npm pkg delete scripts.postinstall
+
 # Install dependencies
 RUN pnpm install --frozen-lockfile
 
