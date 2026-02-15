@@ -32,8 +32,7 @@ RUN cp config.sample.json config.json
 # Build the application
 # We set a fixed version to avoid git-based versioning scripts failing
 ENV VERSION=coolify-deploy
-# Enable tsx for node executions during build
-RUN NODE_OPTIONS="--import tsx" pnpm build
+RUN pnpm build
 
 # Serve stage
 FROM nginxinc/nginx-unprivileged:alpine-slim
