@@ -33,6 +33,7 @@ import ReplyPreview from "./ReplyPreview";
 import { UserIdentityWarning } from "./UserIdentityWarning";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import VoiceRecordComposerTile from "./VoiceRecordComposerTile";
+import ContentMessages from "../../../ContentMessages";
 import { VoiceRecordingStore } from "../../../stores/VoiceRecordingStore";
 import { RecordingState } from "../../../audio/VoiceRecording";
 import type ResizeNotifier from "../../../utils/ResizeNotifier";
@@ -390,6 +391,29 @@ export class MessageComposer extends React.Component<IProps, IState> {
         return true;
     };
 
+    private addGif = (url: string): boolean => {
+        (async () => {
+            try {
+                const res = await fetch(url);
+                const blob = await res.blob();
+                // Create a File object from the Blob
+                const file = new File([blob], "animation.gif", { type: "image/gif" });
+
+                ContentMessages.sharedInstance().sendContentListToRoom(
+                    [file],
+                    this.props.room.roomId,
+                    this.props.relation,
+                    this.props.replyToEvent,
+                    this.props.mxClient,
+                    this.context.timelineRenderingType,
+                );
+            } catch (e) {
+                console.error("Failed to add GIF", e);
+            }
+        })();
+        return true;
+    };
+
     private sendMessage = async (): Promise<void> => {
         if (this.state.haveRecording && this.voiceRecordingButton.current) {
             // There shouldn't be any text message to send when a voice recording is active, so
@@ -688,6 +712,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
                             {canSendMessages && (
                                 <MessageComposerButtons
                                     addEmoji={this.addEmoji}
+                                    addGif={this.addGif}
                                     haveRecording={this.state.haveRecording}
                                     isMenuOpen={this.state.isMenuOpen}
                                     isStickerPickerOpen={this.state.isStickerPickerOpen}

@@ -56,5 +56,6 @@
         "url": "https://call.element.io",
         "brand": "Partic Call"
     },
-    "map_style_url": "https://api.maptiler.com/maps/streets/style.json?key=fU3vlMsMn4Jb6dnEIFsx"
+    "map_style_url": "https://api.maptiler.com/maps/streets/style.json?key=fU3vlMsMn4Jb6dnEIFsx",
+    "giphy_api_key": "YOUR_GIPHY_API_KEY"
 }

@@ -46,6 +46,7 @@ import { useScopedRoomContext } from "../../../contexts/ScopedRoomContext.tsx";
 
 interface IProps {
     addEmoji: (emoji: string) => boolean;
+    addGif: (url: string) => boolean;
     haveRecording: boolean;
     isMenuOpen: boolean;
     isStickerPickerOpen: boolean;
@@ -60,6 +61,8 @@ interface IProps {
     isRichTextEnabled: boolean;
     onComposerModeClick: () => void;
 }
+
+import { GifButton } from "./GifButton";
 
 type OverflowMenuCloser = () => void;
 export const OverflowMenuContext = createContext<OverflowMenuCloser | null>(null);
@@ -87,6 +90,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             ) : (
                 emojiButton(props)
             ),
+            gifButton(props),
         ];
         moreButtons = [
             uploadButton(), // props passed via UploadButtonContext
@@ -106,6 +110,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             ) : (
                 emojiButton(props)
             ),
+            gifButton(props),
             uploadButton(), // props passed via UploadButtonContext
         ];
         moreButtons = [
@@ -158,6 +163,17 @@ function emojiButton(props: IProps): ReactElement {
         <EmojiButton
             key="emoji_button"
             addEmoji={props.addEmoji}
+            menuPosition={props.menuPosition}
+            className="mx_MessageComposer_button"
+        />
+    );
+}
+
+function gifButton(props: IProps): ReactElement {
+    return (
+        <GifButton
+            key="gif_button"
+            addGif={props.addGif}
             menuPosition={props.menuPosition}
             className="mx_MessageComposer_button"
         />
