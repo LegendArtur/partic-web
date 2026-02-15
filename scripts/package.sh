@@ -23,8 +23,8 @@ rm element-$version/config.json || true
 
 # GNU/BSD compatibility workaround
 tar_perms=(--owner=0 --group=0) && [ "$(uname)" == "Darwin" ] && tar_perms=(--uid=0 --gid=0)
-tar "${tar_perms[@]}" -chvzf dist/element-$version.tar.gz element-$version
+tar "${tar_perms[@]}" -chvzf dist/partic-web-$version.tar.gz element-$version
 rm -r element-$version
 
 echo
-echo "Packaged dist/element-$version.tar.gz"
+echo "Packaged dist/partic-web-$version.tar.gz"
