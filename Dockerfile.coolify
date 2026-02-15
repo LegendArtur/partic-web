@@ -32,6 +32,7 @@ RUN cp config.sample.json config.json
 # Build the application
 # We set a fixed version to avoid git-based versioning scripts failing
 ENV VERSION=coolify-deploy
+RUN pnpm vendor:modernizr
 RUN pnpm build
 
 # Serve stage
