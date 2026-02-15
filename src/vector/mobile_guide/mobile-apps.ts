@@ -28,7 +28,7 @@ export interface MobileAppMetadata {
 
 export const mobileApps: Record<MobileAppVariant, MobileAppMetadata> = {
     [MobileAppVariant.Classic]: {
-        name: "Element",
+        name: "Partic",
         appleAppId: "id1083446067",
         appStoreUrl: "https://apps.apple.com/app/element-messenger/id1083446067",
         playStoreUrl: "https://play.google.com/store/apps/details?id=im.vector.app",
